@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EL Games Status</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 p-4">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-4">EL Games Status</h1>
+    <div id="status-list">
+      <p>Lade Statusdaten...</p>
+    </div>
+  </div>
+  <script>
+    fetch('status-data/status.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("status-list");
+        container.innerHTML = "";
+        data.components.forEach(group => {
+          const groupEl = document.createElement("div");
+          groupEl.innerHTML = `<h2 class="text-xl font-semibold mt-4">${group.group}</h2>`;
+          group.components.forEach(comp => {
+            const color = comp.status === "operational" ? "green" :
+                          comp.status === "degraded" ? "yellow" :
+                          comp.status === "outage" ? "red" : "gray";
+            const item = `<div class="flex justify-between p-2 bg-white my-1 rounded shadow">
+              <span>${comp.name}</span>
+              <span class="text-${color}-600 font-bold">${comp.status}</span>
+            </div>`;
+            groupEl.innerHTML += item;
+          });
+          container.appendChild(groupEl);
+        });
+      });
+  </script>
+</body>
+</html>
