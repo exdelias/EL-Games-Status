@@ -1,0 +1,8 @@
+
+{
+  "components": [],
+  "groups": [],
+  "incidents": [],
+  "statusTypes": ["Betrieb normal", "Teilweise Störung", "Komplett offline"],
+  "incidentTypes": ["Störung", "Ausfall", "Update"]
+}
